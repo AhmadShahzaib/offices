@@ -21,6 +21,7 @@ export default function GetDecorators() {
       name: 'search',
       example: 'search by name ,city, country etc',
       required: false,
+      
     }),
     ApiQuery({
       name: 'orderBy',
