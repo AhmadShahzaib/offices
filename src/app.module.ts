@@ -29,27 +29,27 @@ import tunnelConfig from 'tunnelConfig';
           useUnifiedTopology: true,
         };
 
-        if (useTunnel) {
-          const { devServerTunnelConfig } = tunnelConfig;
-          return new Promise((res, rej) => {
-            tunnel(devServerTunnelConfig, async (error, server) => {
-              if (server) {
-                // lets overwrite default mongouri to use tunnel-ssh
-                mongooseConfig.uri = devServerTunnelConfig.mongoDBUri;
-                console.log(
-                  `tunnel created with host: ${devServerTunnelConfig.host}`,
-                );
-                res(mongooseConfig);
-              } else {
-                console.log(
-                  `tunnel connection failed with: ${devServerTunnelConfig.host}`,
-                );
-                console.log(error);
-                rej(error);
-              }
-            });
-          });
-        }
+        // if (useTunnel) {
+        //   const { devServerTunnelConfig } = tunnelConfig;
+        //   return new Promise((res, rej) => {
+        //     tunnel(devServerTunnelConfig, async (error, server) => {
+        //       if (server) {
+        //         // lets overwrite default mongouri to use tunnel-ssh
+        //         mongooseConfig.uri = devServerTunnelConfig.mongoDBUri;
+        //         console.log(
+        //           `tunnel created with host: ${devServerTunnelConfig.host}`,
+        //         );
+        //         res(mongooseConfig);
+        //       } else {
+        //         console.log(
+        //           `tunnel connection failed with: ${devServerTunnelConfig.host}`,
+        //         );
+        //         console.log(error);
+        //         rej(error);
+        //       }
+        //     });
+        //   });
+        // }
         return mongooseConfig;
       },
       inject: [ConfigurationService],
