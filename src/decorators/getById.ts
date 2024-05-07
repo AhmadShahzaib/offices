@@ -13,7 +13,7 @@ export default function GetByIdDecorators() {
   const GetByIdDecorators: Array<CombineDecoratorType> = [
     Get(':id'),
 
-    SetMetadata('permissions', [OFFICES.GETBYID]),
+    SetMetadata('permissions', [OFFICES.LIST]),
     ApiBearerAuth("access-token"),
     ApiResponse({ status: HttpStatus.OK, type: OfficeResponse }),
     ApiParam({
