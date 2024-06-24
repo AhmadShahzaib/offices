@@ -63,7 +63,7 @@ export class AppController extends BaseController {
       Logger.log(`get offices ById :${id}`);
       const option = { IsActive: true };
       const office = await officeById(this.officeService, id, option);
-      let headOffice = await this.officeService.findHeadOffice();
+      const headOffice = await this.officeService.findHeadOffice();
       office['headOffice'] = headOffice.address;
       office['headOfficeId'] = headOffice.id;
       return office;
