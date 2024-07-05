@@ -21,12 +21,12 @@ export const addAndUpdateOffice = async (
     throw new ConflictException(`Office name already exists`);
   }
 
-  if (office && office.phoneNumber === officeModel.phoneNumber) {
-    Logger.log(
-      `office already exist with phoneNo. :${officeModel.phoneNumber}`,
-    );
-    throw new ConflictException(`Phone number already exists`);
-  }
+  // if (office && office.phoneNumber === officeModel.phoneNumber) {
+  //   Logger.log(
+  //     `office already exist with phoneNo. :${officeModel.phoneNumber}`,
+  //   );
+  //   throw new ConflictException(`Phone number already exists`);
+  // }
   const index = timezones.findIndex((ele) => {
     return ele.tzCode == (officeModel.timeZone as string);
   });
