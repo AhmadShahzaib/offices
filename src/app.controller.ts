@@ -75,17 +75,17 @@ export class AppController extends BaseController {
   @GetDecorators()
   async getOffices(
     @Query(ListingParamsValidationPipe) queryParams: ListingParams,
-    @Req() request:Request,
+    @Req() request: Request,
     @Res() response: Response,
   ) {
     try {
       const { tenantId: id } = request.user ?? ({ tenantId: undefined } as any);
       const options = {};
       const { search, orderBy, orderType, pageNo, limit } = queryParams;
-       options['$and']=[{tenantId:id}]
+      options['$and'] = [{ tenantId: id }];
       if (search) {
         options['$or'] = [];
-       
+
         searchableAttributes.forEach((attribute) => {
           options['$or'].push({ [attribute]: new RegExp(search, 'i') });
         });
@@ -110,7 +110,7 @@ export class AppController extends BaseController {
         data: responseData,
         total,
         pageNo: pageNo ?? 1,
-        tententID:id,
+        tententID: id,
         last_page: Math.ceil(
           total /
             (limit && limit.toString().toLowerCase() === 'all'
@@ -247,7 +247,7 @@ export class AppController extends BaseController {
       }`,
     );
     Logger.log(`Request to add office :${officeModel}`);
-    const { name, phoneNumber } = officeModel;
+    const { name } = officeModel;
     const { tenantId } = request.user ?? ({ tenantId: undefined } as any);
     try {
       Logger.log(
@@ -257,7 +257,7 @@ export class AppController extends BaseController {
         $and: [{ isDeleted: false }],
         $or: [
           { name: { $regex: new RegExp(`^${officeModel.name}`, 'i') } },
-          { phoneNumber: phoneNumber },
+          // { phoneNumber: phoneNumber },
         ],
       };
       officeModel.tenantId = tenantId;
@@ -282,9 +282,7 @@ export class AppController extends BaseController {
   }
   @UseInterceptors(new MessagePatternResponseInterceptor())
   @MessagePattern({ cmd: 'office' })
-  async office(
-    data
-  ): Promise<OfficeResponse | Error> {
+  async office(data): Promise<OfficeResponse | Error> {
     try {
       const office = await this.officeService.addOffice(data);
       if (office && Object.keys(office).length > 0) {
@@ -323,9 +321,9 @@ export class AppController extends BaseController {
           { name: { $regex: new RegExp(`^${editRequestData.name}`, 'i') } },
         ],
       };
-      if (editRequestData.phoneNumber) {
-        option.$or.push({ phoneNumber: editRequestData.phoneNumber });
-      }
+      // if (editRequestData.phoneNumber) {
+      //   option.$or.push({ phoneNumber: editRequestData.phoneNumber });
+      // }
       const requestModel: EditOfficeRequest = (await addAndUpdateOffice(
         this.officeService,
         editRequestData,
