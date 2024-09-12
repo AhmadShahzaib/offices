@@ -12,7 +12,7 @@ import { OfficeResponse } from '../models/response.model';
 export default function IsActiveDecorators() {
   const IsActiveDecorators: Array<CombineDecoratorType> = [
     Patch('/status/:id'),
-    SetMetadata('permissions', [OFFICES.ACTIVATE]),
+    SetMetadata('permissions', [OFFICES.DEACTIVATE]),
     ApiBearerAuth("access-token"),
     ApiResponse({ status: HttpStatus.OK, type: OfficeResponse }),
     ApiParam({
